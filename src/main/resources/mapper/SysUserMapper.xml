@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylz.login.mapper.SysUserMapper">
+
+    <resultMap type="com.ylz.login.entity.SysUser" id="SysUserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+        <result property="enabled" column="enabled" jdbcType="BOOLEAN"/>
+        <result property="accountNonExpired" column="account_non_expired" jdbcType="BOOLEAN"/>
+        <result property="accountNonLocked" column="account_non_locked" jdbcType="BOOLEAN"/>
+        <result property="credentialsNonExpired" column="credentials_non_expired" jdbcType="BOOLEAN"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="INTEGER"/>
+        <result property="updateUser" column="update_user" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SysUserMap">
+        select
+          id, account, user_name, password, last_login_time, enabled, account_non_expired, account_non_locked, credentials_non_expired, create_time, update_time, create_user, update_user
+        from sys_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="selectByName" resultMap="SysUserMap">
+        select * from sys_user where account = #{userName};
+    </select>
+</mapper>

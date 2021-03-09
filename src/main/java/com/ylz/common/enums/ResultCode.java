@@ -1,4 +1,4 @@
-package com.ylz.pojo;
+package com.ylz.common.enums;
 
 /**
  * @author ylz
