@@ -2,6 +2,7 @@ package com.ylz.login.config;
 
 import com.ylz.login.config.handler.*;
 import com.ylz.login.config.service.UserDetailsServiceImpl;
+import com.ylz.login.filter.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,9 +11,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.apache.commons.lang3.BooleanUtils.and;
 
@@ -59,12 +62,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     CustomizeFilterInvocationSecurityMetadataSource securityMetadataSource;
     @Autowired
     private CustomizeAbstractSecurityInterceptor securityInterceptor;
-
+    // JWT 拦截器
+    @Autowired
+    JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //配置认证方式等
-        auth.userDetailsService(userDetailsService());
+        auth.userDetailsService(userDetailsService()).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
@@ -72,6 +77,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //http相关的配置，包括登入登出、异常处理、会话管理等
         //跨域
         http.cors().and().csrf().disable();
+
+        http.csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests().
                 /*antMatchers("/getUser").hasAnyAuthority("query_user").*/
@@ -101,7 +109,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     maximumSessions(1).//同一账号同时登录最大用户数
                     expiredSessionStrategy(sessionInformationExpiredStrategy);//会话信息过期策略会话信息过期策略(账号被挤下线)
 
-
+        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
 
 

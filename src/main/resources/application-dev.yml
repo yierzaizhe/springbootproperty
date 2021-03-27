@@ -1,4 +1,5 @@
 spring:
+  #数据库
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -7,6 +8,17 @@ spring:
     password: 123456
     hikari:
       minimum-idle: 5
+    #文件上传限制
+    servlet:
+      multipart:
+        max-request-size: 20MB
+        enabled: true #开启文件上传
+        max-file-size: 20MB #限制文件上传大小为10M
+        file-size-threshold: 20MB
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password:
 server:
   port: 8080
 
@@ -43,3 +55,32 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+
+#here is the importance configs of JWT
+jwt:
+  route:
+    authentication:
+      path: /auth
+  header: Authorization
+  expiration: 604800
+  secret: ylz
+#Minio配置
+# 图片服务器 minio配置
+minio:
+  ip: 192.168.187.131:9000
+  # minio登录账号密码
+  accessKey: minioroot
+  secretKey: 11111111
+  thumbor:
+    width: 10
+  ## 桶名（文件夹）命名规则要符合 亚马逊S3标准 详情可看http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html
+  #bucketName:
+    ## 照片文件夹
+   # facility: test-springboot
+
+
+token:
+  expirationSeconds: 300
+  validTime: 7
+
+

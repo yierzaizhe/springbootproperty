@@ -32,6 +32,8 @@ public enum  ResultCode {
     USER_ACCOUNT_NOT_EXIST(2007, "账号不存在"),
     USER_ACCOUNT_ALREADY_EXIST(2008, "账号已存在"),
     USER_ACCOUNT_USE_BY_OTHERS(2009, "账号下线"),
+    TOKEN_IS_BLACKLIST(4001,"此token为黑名单"),
+    LOGIN_IS_OVERDUE(4002,"登录已失效"),
 
     /* 业务错误 */
     NO_PERMISSION(3001, "没有权限");

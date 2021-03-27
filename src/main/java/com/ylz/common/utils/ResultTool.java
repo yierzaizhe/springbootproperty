@@ -15,6 +15,9 @@ public class ResultTool {
     public static <T> JsonResult<T> success(T data) {
         return new JsonResult(true, data);
     }
+    public static <T> JsonResult<T> success(String token) {
+        return new JsonResult(true, token);
+    }
 
     public static JsonResult fail() {
         return new JsonResult(false);
