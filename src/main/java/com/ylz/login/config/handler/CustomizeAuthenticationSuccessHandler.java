@@ -56,11 +56,10 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
         //进而前台动态的控制菜单的显示
         //返回json数据
         //生成token
-//获取请求的ip地址
+        //获取请求的ip地址
         String ip = AccessAddressUtil.getIpAddress(httpServletRequest);
         Map<String,Object> map = new HashMap<>();
         map.put("ip",ip);
-
 
         String jwtToken = JwtTokenUtil.generateToken(userDetails.getUsername(),expirationSeconds, map);
         //刷新时间
