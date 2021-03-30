@@ -80,7 +80,7 @@ minio:
 
 
 token:
-  expirationSeconds: 70000
+  expirationSeconds: 80000
   validTime: 7
 
 
