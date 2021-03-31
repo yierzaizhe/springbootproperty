@@ -1,6 +1,7 @@
 package com.ylz.common.entity;
 
 import com.ylz.common.enums.ResultCode;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
  * @author ylz
  * @date 2021-03-02-11:50
  */
+@Data
 public class JsonPageResult<T> implements Serializable {
     private Boolean success;
     private Integer errorCode;
@@ -25,58 +27,17 @@ public class JsonPageResult<T> implements Serializable {
         this.errorMsg = success ? ResultCode.SUCCESS.getMessage() : ResultCode.COMMON_FAIL.getMessage();
     }
 
-    public JsonPageResult(boolean success, String jwtToken) {
-        this.success = success;
-        this.errorCode = success ? ResultCode.SUCCESS.getCode() : ResultCode.COMMON_FAIL.getCode();
-        this.errorMsg = success ? ResultCode.SUCCESS.getMessage() : ResultCode.COMMON_FAIL.getMessage();
-        this.jwtToken=jwtToken;
-    }
-    public JsonPageResult(boolean success, ResultCode resultEnum) {
-        this.success = success;
-        this.errorCode = success ? ResultCode.SUCCESS.getCode() : (resultEnum == null ? ResultCode.COMMON_FAIL.getCode() : resultEnum.getCode());
-        this.errorMsg = success ? ResultCode.SUCCESS.getMessage() : (resultEnum == null ? ResultCode.COMMON_FAIL.getMessage() : resultEnum.getMessage());
-    }
-    public JsonPageResult(boolean success, ResultCode resultEnum, String jwtToken) {
-        this.success = success;
-        this.errorCode = success ? ResultCode.SUCCESS.getCode() : (resultEnum == null ? ResultCode.COMMON_FAIL.getCode() : resultEnum.getCode());
-        this.errorMsg = success ? ResultCode.SUCCESS.getMessage() : (resultEnum == null ? ResultCode.COMMON_FAIL.getMessage() : resultEnum.getMessage());
-        this.jwtToken=jwtToken;
-    }
 
-    public JsonPageResult(boolean success, T data) {
+
+    public JsonPageResult(boolean success, T data,long total) {
         this.success = success;
-        this.errorCode = success ? ResultCode.SUCCESS.getCode() : ResultCode.COMMON_FAIL.getCode();
-        this.errorMsg = success ? ResultCode.SUCCESS.getMessage() : ResultCode.COMMON_FAIL.getMessage();
-        this.data = data;
-    }
-    public JsonPageResult(boolean success, T data, String jwtToken) {
-        this.success = success;
-        this.errorCode = success ? ResultCode.SUCCESS.getCode() : ResultCode.COMMON_FAIL.getCode();
-        this.errorMsg = success ? ResultCode.SUCCESS.getMessage() : ResultCode.COMMON_FAIL.getMessage();
-        this.data = data;
-        this.jwtToken=jwtToken;
-    }
-    public JsonPageResult(boolean success, ResultCode resultEnum, T data) {
-        this.success = success;
-        this.errorCode = success ? ResultCode.SUCCESS.getCode() : (resultEnum == null ? ResultCode.COMMON_FAIL.getCode() : resultEnum.getCode());
-        this.errorMsg = success ? ResultCode.SUCCESS.getMessage() : (resultEnum == null ? ResultCode.COMMON_FAIL.getMessage() : resultEnum.getMessage());
-        this.data = data;
-    }
-    public JsonPageResult(boolean success, ResultCode resultEnum, T data,long total) {
-        this.success = success;
-        this.errorCode = success ? ResultCode.SUCCESS.getCode() : (resultEnum == null ? ResultCode.COMMON_FAIL.getCode() : resultEnum.getCode());
-        this.errorMsg = success ? ResultCode.SUCCESS.getMessage() : (resultEnum == null ? ResultCode.COMMON_FAIL.getMessage() : resultEnum.getMessage());
+        this.errorCode = ResultCode.SUCCESS.getCode();
+        this.errorMsg = ResultCode.SUCCESS.getMessage();
         this.data = data;
         this.total = total;
     }
-    public JsonPageResult(boolean success, ResultCode resultEnum, T data, String jwtToken) {
-        this.success = success;
-        this.errorCode = success ? ResultCode.SUCCESS.getCode() : (resultEnum == null ? ResultCode.COMMON_FAIL.getCode() : resultEnum.getCode());
-        this.errorMsg = success ? ResultCode.SUCCESS.getMessage() : (resultEnum == null ? ResultCode.COMMON_FAIL.getMessage() : resultEnum.getMessage());
-        this.data = data;
-        this.jwtToken=jwtToken;
-    }
-    public Boolean getSuccess() {
+
+   /* public Boolean getSuccess() {
         return success;
     }
 
@@ -122,5 +83,5 @@ public class JsonPageResult<T> implements Serializable {
 
     public void setTotal(Long total) {
         this.total = total;
-    }
+    }*/
 }

@@ -2,7 +2,6 @@ package com.ylz.system.mapper;
 
 import com.ylz.system.entity.SysCommunity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * </p>
  *
  * @author ylz
- * @since 2021-03-29
+ * @since 2021-03-31
  */
 @Repository
 public interface SysCommunityMapper extends BaseMapper<SysCommunity> {

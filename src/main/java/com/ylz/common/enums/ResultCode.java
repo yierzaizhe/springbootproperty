@@ -36,7 +36,12 @@ public enum  ResultCode {
     LOGIN_IS_OVERDUE(4002,"登录已失效"),
 
     /* 业务错误 */
-    NO_PERMISSION(3001, "没有权限");
+    NO_PERMISSION(3001, "没有权限"),
+    /*小区*/
+    COMMUNITY_ADD_FAILED(5001,"新增小区失败，请检查参数！"),
+    COMMUNITY_DEL_FAILED(5002,"删除小区失败，请检查参数！"),
+    COMMUNITY_UP_FAILED(5003,"更新小区失败，请检查参数！"),
+    COMMUNITY_UPSTA_FAILED(5004,"更新小区状态失败，请检查参数！");
     private Integer code;
     private String message;
 

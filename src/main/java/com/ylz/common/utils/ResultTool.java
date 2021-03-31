@@ -1,5 +1,6 @@
 package com.ylz.common.utils;
 
+import com.ylz.common.entity.JsonPageResult;
 import com.ylz.common.entity.JsonResult;
 import com.ylz.common.enums.ResultCode;
 
@@ -14,6 +15,10 @@ public class ResultTool {
 
     public static <T> JsonResult<T> success(T data) {
         return new JsonResult(true, data);
+    }
+
+    public static <T> JsonPageResult<T> successPage(T data,Long total) {
+        return new JsonPageResult<T>(true, data,total);
     }
     public static <T> JsonResult<T> success(String token) {
         return new JsonResult(true, token);

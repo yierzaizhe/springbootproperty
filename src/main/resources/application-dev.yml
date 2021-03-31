@@ -55,7 +55,7 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
-
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 #here is the importance configs of JWT
 jwt:
   route:
@@ -84,3 +84,7 @@ token:
   validTime: 7
 
 
+#分页详情
+page:
+  currentPage: 1
+  pageSize: 5
