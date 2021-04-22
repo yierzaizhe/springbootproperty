@@ -20,7 +20,7 @@ spring:
       port: 6379
       password:
 server:
-  port: 8080
+  port: 8088
 
 mybatis-plus:
   # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml

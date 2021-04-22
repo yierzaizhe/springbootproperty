@@ -34,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        if (userName == null || "".equals(userName)){
+            if (userName == null || "".equals(userName)){
             throw new RuntimeException("用户名不能为空");
         }
         SysUser user=userService.selectByName(userName);

@@ -76,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //http相关的配置，包括登入登出、异常处理、会话管理等
         //跨域
-        http.cors().and().csrf().disable();
+        /*http.cors().and().csrf().disable();*/
 
         http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
