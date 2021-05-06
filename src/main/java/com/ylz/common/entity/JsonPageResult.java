@@ -1,5 +1,6 @@
 package com.ylz.common.entity;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ylz.common.enums.ResultCode;
 import lombok.Data;
 
@@ -17,7 +18,11 @@ public class JsonPageResult<T> implements Serializable {
     private String errorMsg;
     private String jwtToken;
     private T data;
-    private Long total;
+
+    private long total;
+    private long totalPages;
+    private long currentPage;
+
     public JsonPageResult() {
     }
 
@@ -27,61 +32,15 @@ public class JsonPageResult<T> implements Serializable {
         this.errorMsg = success ? ResultCode.SUCCESS.getMessage() : ResultCode.COMMON_FAIL.getMessage();
     }
 
-
-
-    public JsonPageResult(boolean success, T data,long total) {
+    public JsonPageResult(boolean success, T data,long currentPage,long pages ,long total) {
         this.success = success;
         this.errorCode = ResultCode.SUCCESS.getCode();
         this.errorMsg = ResultCode.SUCCESS.getMessage();
         this.data = data;
+        this.currentPage = currentPage;
+        this.totalPages = pages;
         this.total = total;
+
     }
 
-   /* public Boolean getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(Boolean success) {
-        this.success = success;
-    }
-
-    public Integer getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(Integer errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public String getJwtToken() {
-        return jwtToken;
-    }
-
-    public void setJwtToken(String jwtToken) {
-        this.jwtToken = jwtToken;
-    }
-
-    public Long getTotal() {
-        return total;
-    }
-
-    public void setTotal(Long total) {
-        this.total = total;
-    }*/
 }

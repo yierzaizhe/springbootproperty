@@ -1,8 +1,12 @@
 package com.ylz.common.utils;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ylz.common.entity.JsonPageResult;
 import com.ylz.common.entity.JsonResult;
 import com.ylz.common.enums.ResultCode;
+import com.ylz.system.entity.SysCommunity;
+
+import java.util.List;
 
 /**
  * @author ylz
@@ -17,8 +21,8 @@ public class ResultTool {
         return new JsonResult(true, data);
     }
 
-    public static <T> JsonPageResult<T> successPage(T data,Long total) {
-        return new JsonPageResult<T>(true, data,total);
+    public static <T> JsonPageResult<T> successPage(T data,Long currentPage,Long pages ,Long total) {
+        return new JsonPageResult<T>(true, data,currentPage,pages,total);
     }
     public static <T> JsonResult<T> success(String token) {
         return new JsonResult(true, token);

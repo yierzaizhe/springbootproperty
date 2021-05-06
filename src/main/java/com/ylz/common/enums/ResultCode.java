@@ -9,7 +9,7 @@ package com.ylz.common.enums;
  *   #2001～2999 区间表示用户错误
  *   #3001～3999 区间表示接口异常
  */
-public enum  ResultCode {
+public enum   ResultCode {
     /* 成功 */
     SUCCESS(200, "成功"),
 

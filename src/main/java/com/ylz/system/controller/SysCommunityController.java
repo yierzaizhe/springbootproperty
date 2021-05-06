@@ -34,10 +34,10 @@ public class SysCommunityController {
     @Autowired
     private ISysCommunityService communityService;
 
-    @RequestMapping("/getAll")
+    /*@RequestMapping("/getAll")
     public JsonPageResult getAll2(){
         return ResultTool.successPage(communityService.getAll().getRecords(), communityService.getAll().getTotal());
-    }
+    }*/
     /**
      * 按条件查找小区信息，
      * @param param
@@ -46,7 +46,7 @@ public class SysCommunityController {
     @RequestMapping("/search")
     public JsonPageResult searchBy(@RequestBody Map<String, Object> param){
         IPage<SysCommunity> pageList = communityService.searchBy(param);
-        return ResultTool.successPage(pageList.getRecords(),pageList.getTotal());
+        return ResultTool.successPage(pageList.getRecords(),pageList.getCurrent(),pageList.getPages(),pageList.getTotal());
     }
 
     @RequestMapping("/add")

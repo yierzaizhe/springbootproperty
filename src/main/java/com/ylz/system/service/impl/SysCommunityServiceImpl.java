@@ -34,7 +34,7 @@ public class SysCommunityServiceImpl extends ServiceImpl<SysCommunityMapper, Sys
     private SysCommunityMapper communityMapper;
     @Override
     public IPage<SysCommunity> getAll() {
-        return communityMapper.selectPage(new Page<SysCommunity>(1,2),null);
+        return communityMapper.selectPage(new Page<SysCommunity>(1,5),null);
     }
 
     /**
