@@ -21,5 +21,13 @@ public interface ISysBuildingService extends IService<SysBuilding> {
     public List<SysBuilding> getAll();
     //按条件查找
     public IPage<SysBuilding> searchBy(Map<String,Object> param);
+    //删除
+    public Integer delete(Map<String,Object> param);
+    //按id查信息
+    public SysBuilding findById(Integer id);
+    //更新信息
+    public Integer update(SysBuilding sysBuilding);
+
+    public Integer add(SysBuilding SysBuilding);
 
 }

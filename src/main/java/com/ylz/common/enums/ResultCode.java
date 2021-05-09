@@ -41,7 +41,12 @@ public enum   ResultCode {
     COMMUNITY_ADD_FAILED(5001,"新增小区失败，请检查参数！"),
     COMMUNITY_DEL_FAILED(5002,"删除小区失败，请检查参数！"),
     COMMUNITY_UP_FAILED(5003,"更新小区失败，请检查参数！"),
-    COMMUNITY_UPSTA_FAILED(5004,"更新小区状态失败，请检查参数！");
+    COMMUNITY_UPSTA_FAILED(5004,"更新小区状态失败，请检查参数！"),
+    /*楼房*/
+    BUILD_ADD_FAILED(5001,"新增楼房失败，请检查参数！"),
+    BUILD_DEL_FAILED(5002,"删除楼房失败，请检查参数！"),
+    BUILD_UP_FAILED(5003,"更新楼房失败，请检查参数！"),
+    BUILD_UPSTA_FAILED(5004,"更新楼房状态失败，请检查参数！");
     private Integer code;
     private String message;
 
