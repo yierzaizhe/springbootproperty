@@ -2,6 +2,7 @@ package com.ylz.system.mapper;
 
 import com.ylz.system.entity.SysHouse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author ylz
  * @since 2021-05-06
  */
+@Repository
 public interface SysHouseMapper extends BaseMapper<SysHouse> {
 
 }

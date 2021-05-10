@@ -81,6 +81,10 @@ public class SysHouse implements Serializable {
     private String ownerName;
 
     /**
+     * 业主联系方式
+     */
+    private String ownerTel;
+    /**
      * 居住类型，buy 购买 ，null 空房 ，rent 租房
      */
     private String kind;

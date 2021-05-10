@@ -7,7 +7,6 @@ import com.ylz.common.entity.JsonResult;
 import com.ylz.common.enums.ResultCode;
 import com.ylz.common.utils.ResultTool;
 import com.ylz.system.entity.SysBuilding;
-import com.ylz.system.entity.SysCommunity;
 import com.ylz.system.service.ISysBuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
