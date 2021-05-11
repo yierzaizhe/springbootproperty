@@ -69,36 +69,4 @@ public class SysHouse implements Serializable {
      * 房子平米数
      */
     private String area;
-
-    /**
-     * 业主id
-     */
-    private Integer ownerId;
-
-    /**
-     * 业主姓名
-     */
-    private String ownerName;
-
-    /**
-     * 业主联系方式
-     */
-    private String ownerTel;
-    /**
-     * 居住类型，buy 购买 ，null 空房 ，rent 租房
-     */
-    private String kind;
-
-    /**
-     * 对房屋居住的解释
-     */
-    private String kindParam;
-
-    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private LocalDateTime startTime;
-
-    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private LocalDateTime endTime;
-
-
 }

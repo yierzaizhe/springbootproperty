@@ -46,7 +46,18 @@ public enum   ResultCode {
     BUILD_ADD_FAILED(5001,"新增房产失败，请检查参数！"),
     BUILD_DEL_FAILED(5002,"删除房产失败，请检查参数！"),
     BUILD_UP_FAILED(5003,"更新房产失败，请检查参数！"),
-    BUILD_UPSTA_FAILED(5004,"更新房产状态失败，请检查参数！");
+    BUILD_UPSTA_FAILED(5004,"更新房产状态失败，请检查参数！"),
+    /*业主*/
+    OWNER_ADD_FAILED(5001,"新增业主信息失败，请检查参数！"),
+    OWNER_ADD_HOUSE_FAILED(5001,"该门牌号为空号，请检查参数！"),
+    OWNER_DEL_FAILED(5002,"删除业主信息失败，请检查参数！"),
+    OWNER_UP_FAILED(5003,"更新业主信息失败，请检查参数！"),
+    OWNER_UPSTA_FAILED(5004,"更新业主信息状态失败，请检查参数！"),
+    /*居住情况*/
+    LIVE_ADD_FAILED(5001,"新增居住信息失败，请检查参数！"),
+    LIVE_DEL_FAILED(5002,"删除居住信息失败，请检查参数！"),
+    LIVE_UP_FAILED(5003,"更新居住信息失败，请检查参数！"),
+    LIVE_UPSTA_FAILED(5004,"更新居住信息状态失败，请检查参数！");
     private Integer code;
     private String message;
 
