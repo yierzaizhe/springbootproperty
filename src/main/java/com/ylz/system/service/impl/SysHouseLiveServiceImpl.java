@@ -52,6 +52,17 @@ public class SysHouseLiveServiceImpl extends ServiceImpl<SysHouseLiveMapper, Sys
             if (!StringUtil.isEmpty((String) param.get("endTime"))){
                 wrapper.le("start_time",param.get("endTime"));
             }
+            if (!StringUtil.isEmpty((String) param.get("currentPage"))){
+                currentPage =  Integer.parseInt((String) param.get("currentPage"));
+            }
+            if (!StringUtil.isEmpty((String) param.get("pageSize"))){
+                pageSize =  Integer.parseInt((String) param.get("pageSize"));
+            }if (!StringUtil.isEmpty((String) param.get("currentPage"))){
+                currentPage =  Integer.parseInt((String) param.get("currentPage"));
+            }
+            if (!StringUtil.isEmpty((String) param.get("pageSize"))){
+                pageSize =  Integer.parseInt((String) param.get("pageSize"));
+            }
         }
         page.setCurrent(currentPage);
         page.setSize(pageSize);
@@ -84,5 +95,15 @@ public class SysHouseLiveServiceImpl extends ServiceImpl<SysHouseLiveMapper, Sys
     @Override
     public Integer add(SysHouseLive sysHouseLive) {
         return houseLiveMapper.insert(sysHouseLive);
+    }
+
+    @Override
+    public int count(Map<String, Object> param) {
+        QueryWrapper<SysHouseLive> wrapper = new QueryWrapper<>();
+        if (param == null || StringUtil.isEmpty((String) param.get("houseCode")) ){
+            return 0;
+        }
+        wrapper.eq("house_code",param.get("houseCode"));
+        return houseLiveMapper.selectCount(wrapper);
     }
 }

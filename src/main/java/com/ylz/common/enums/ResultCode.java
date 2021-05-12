@@ -57,7 +57,8 @@ public enum   ResultCode {
     LIVE_ADD_FAILED(5001,"新增居住信息失败，请检查参数！"),
     LIVE_DEL_FAILED(5002,"删除居住信息失败，请检查参数！"),
     LIVE_UP_FAILED(5003,"更新居住信息失败，请检查参数！"),
-    LIVE_UPSTA_FAILED(5004,"更新居住信息状态失败，请检查参数！");
+    LIVE_EXIST_FAILED(5004,"该房屋已经居住，请检查参数！"),
+    LIVE_UPSTA_FAILED(5005,"更新居住信息状态失败，请检查参数！");
     private Integer code;
     private String message;
 

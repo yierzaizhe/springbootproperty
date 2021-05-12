@@ -67,6 +67,9 @@ public class SysHouseLiveController {
         if (houseService.count(param) <= 0){
             return ResultTool.fail(ResultCode.OWNER_ADD_HOUSE_FAILED);
         }
+        if (houseLiveService.count(param) > 0){
+            return ResultTool.fail(ResultCode.LIVE_EXIST_FAILED);
+        }
         int result = houseLiveService.add(sysHouseLive);
         if (result <= 0){
             return ResultTool.fail(ResultCode.LIVE_ADD_FAILED);

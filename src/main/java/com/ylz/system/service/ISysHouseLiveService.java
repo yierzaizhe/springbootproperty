@@ -18,6 +18,7 @@ import java.util.Map;
 public interface ISysHouseLiveService extends IService<SysHouseLive> {
     //按条件查找
     public IPage<SysHouseLive> searchBy(Map<String,Object> param);
+    public int count(Map<String,Object> param);
     //删除
     public Integer delete(Map<String,Object> param);
     //按id查信息
