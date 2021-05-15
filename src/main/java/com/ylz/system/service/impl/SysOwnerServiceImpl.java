@@ -47,6 +47,9 @@ public class SysOwnerServiceImpl extends ServiceImpl<SysOwnerMapper, SysOwner> i
             if (!StringUtil.isEmpty((String) param.get("name"))){
                 wrapper.like("name",param.get("name"));
             }
+            if (!StringUtil.isEmpty((String) param.get("type"))){
+                wrapper.like("type",param.get("type"));
+            }
             if (!StringUtil.isEmpty((String) param.get("startTime"))){
                 wrapper.ge("create_time",param.get("startTime"));
             }

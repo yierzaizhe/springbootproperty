@@ -50,5 +50,6 @@ public class SysParkingLog implements Serializable {
      */
     private String havePark;
 
+    private String finish;
 
 }

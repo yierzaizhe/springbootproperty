@@ -58,7 +58,15 @@ public enum   ResultCode {
     LIVE_DEL_FAILED(5002,"删除居住信息失败，请检查参数！"),
     LIVE_UP_FAILED(5003,"更新居住信息失败，请检查参数！"),
     LIVE_EXIST_FAILED(5004,"该房屋已经居住，请检查参数！"),
-    LIVE_UPSTA_FAILED(5005,"更新居住信息状态失败，请检查参数！");
+    LIVE_UPSTA_FAILED(5005,"更新居住信息状态失败，请检查参数！"),
+    /*车位情况*/
+    PARK_ADD_FAILED(5001,"新增车位信息失败，请检查参数！"),
+    PARK_DEL_FAILED(5002,"删除车位信息失败，请检查参数！"),
+    PARK_UP_FAILED(5003,"更新车位信息失败，请检查参数！"),
+    PARK_EXIST_FAILED(5004,"该车位已经使用，请检查参数！"),
+    PARK_UPSTA_FAILED(5005,"更新车位信息状态失败，请检查参数！"),
+    PARK_NOT_FAILED(5005,"该车位不存在，请检查参数！"),
+    PAY_ADD_FAILED(5001,"该车辆未完成上次出场！");
     private Integer code;
     private String message;
 

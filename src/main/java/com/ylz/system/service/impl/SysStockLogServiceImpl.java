@@ -4,12 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ylz.common.utils.StringUtil;
+import com.ylz.system.entity.SysCommunity;
 import com.ylz.system.entity.SysParking;
-import com.ylz.system.entity.SysParkingUse;
 import com.ylz.system.entity.SysStock;
-import com.ylz.system.mapper.SysParkingUseMapper;
+import com.ylz.system.entity.SysStockLog;
+import com.ylz.system.mapper.SysStockLogMapper;
 import com.ylz.system.mapper.SysStockMapper;
-import com.ylz.system.service.ISysStockService;
+import com.ylz.system.service.ISysStockLogService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,33 +20,42 @@ import java.util.Map;
 
 /**
  * <p>
- * 小区后勤的库存 服务实现类
+ * 小区后勤的库存采购日志 服务实现类
  * </p>
  *
  * @author ylz
- * @since 2021-05-11
+ * @since 2021-05-15
  */
 @Service
-public class SysStockServiceImpl extends ServiceImpl<SysStockMapper, SysStock> implements ISysStockService {
-
+public class SysStockLogServiceImpl extends ServiceImpl<SysStockLogMapper, SysStockLog> implements ISysStockLogService {
     @Value("${page.currentPage}")
     private int currentPage;
     @Value("${page.pageSize}")
     private int pageSize;
     @Autowired
-    private SysStockMapper stockMapper;
-
+    private SysStockLogMapper stockMapper;
     @Override
-    public IPage<SysStock> searchBy(Map<String, Object> param) {
+    public IPage<SysStockLog> searchBy(Map<String, Object> param) {
         //分页信息
         IPage page = new Page();
-        QueryWrapper<SysStock> wrapper = new QueryWrapper<>();
+        QueryWrapper<SysStockLog> wrapper = new QueryWrapper<>();
         //判断查询条件
         if(param != null){
             if (!StringUtil.isEmpty((String) param.get("goods"))){
                 wrapper.like("goods",param.get("goods"));
             }
-
+            if (!StringUtil.isEmpty((String) param.get("total"))){
+                wrapper.like("total",param.get("total"));
+            }
+            if (!StringUtil.isEmpty((String) param.get("isExamine"))){
+                wrapper.like("is_examine",param.get("isExamine"));
+            }
+            if (!StringUtil.isEmpty((String) param.get("username"))){
+                wrapper.like("username",param.get("username"));
+            }
+            if (!StringUtil.isEmpty((String) param.get("logRemark"))){
+                wrapper.like("log_remark",param.get("logRemark"));
+            }
             if (!StringUtil.isEmpty((String) param.get("startTime"))){
                 wrapper.ge("create_time",param.get("startTime"));
             }
@@ -81,10 +91,10 @@ public class SysStockServiceImpl extends ServiceImpl<SysStockMapper, SysStock> i
     }
 
     @Override
-    public Integer update(SysStock stock) {
+    public Integer update(SysStockLog stock) {
         Integer result=0;
         if (stock != null){
-            QueryWrapper<SysStock> wrapper = new QueryWrapper<>();
+            QueryWrapper<SysStockLog> wrapper = new QueryWrapper<>();
             wrapper.eq("id",stock.getId());
             result = stockMapper.update(stock,wrapper);
         }
@@ -92,7 +102,21 @@ public class SysStockServiceImpl extends ServiceImpl<SysStockMapper, SysStock> i
     }
 
     @Override
-    public Integer add(SysStock stock)  {
+    public Integer add(SysStockLog stock) {
         return stockMapper.insert(stock);
+    }
+
+    @Override
+    public Boolean updateStatus(String status, Integer id) {
+        SysStockLog stockLog = new SysStockLog();
+        stockLog.setIsExamine(status);
+        QueryWrapper<SysStockLog> wrapper = new QueryWrapper<>();
+        wrapper.eq("id",id);
+        int row = stockMapper.update(stockLog,wrapper);
+        if(row>0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

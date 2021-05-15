@@ -11,15 +11,15 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 小区后勤的库存
+ * 小区后勤的库存采购日志
  * </p>
  *
  * @author ylz
- * @since 2021-05-11
+ * @since 2021-05-15
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SysStock implements Serializable {
+public class SysStockLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,14 +32,29 @@ public class SysStock implements Serializable {
     private String goods;
 
     /**
-     * 用途
-     */
-    private String remark;
-
-    /**
      * 数量
      */
     private Integer total;
+
+    /**
+     * 采购人物业人员的用户名
+     */
+    private String username;
+
+    /**
+     * 采购费用
+     */
+    private String totalFee;
+
+    /**
+     * 采购描述
+     */
+    private String logRemark;
+
+    /**
+     * 审核是否通过 0 默认    1--》审核通过
+     */
+    private String isExamine;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private LocalDateTime createTime;
