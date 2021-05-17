@@ -43,7 +43,7 @@ public class CustomizeAuthenticationFailureHandler implements AuthenticationFail
             //账号锁定
             result = ResultTool.fail(ResultCode.USER_ACCOUNT_LOCKED);
         } else if (e instanceof InternalAuthenticationServiceException) {
-            //用户不存在
+            //账号未赋权
             result = ResultTool.fail(ResultCode.USER_ACCOUNT_NOT_EXIST);
         }else{
             //其他错误

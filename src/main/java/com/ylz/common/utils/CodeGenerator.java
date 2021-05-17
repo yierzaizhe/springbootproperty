@@ -54,7 +54,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName("");
-        pc.setParent("com.ylz.system");
+        pc.setParent("com.ylz.login");
         mpg.setPackageInfo(pc);
 
         // 自定义配置

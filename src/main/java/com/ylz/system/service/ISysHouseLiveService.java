@@ -26,5 +26,5 @@ public interface ISysHouseLiveService extends IService<SysHouseLive> {
     //更新信息
     public Integer update(SysHouseLive sysHouseLive);
 
-    public Integer add(SysHouseLive sysHouseLive);
+    public Integer add(SysHouseLive sysHouseLive) throws Exception;
 }

@@ -15,9 +15,9 @@ public class AliPayConfig {
 
     public  String alipay_public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqCDLzN96vplyWaucNHsspuwVcWlJPDPfTb3erdoMOrtX1jild8cNTpGCdhXB6QPlA8sCZmEd7sf3hOeo6mUQJbzJIZcjuFze2bRT+Qj8H2X8PuqRJzQCPNtEpxoqatXU3O1FqNg6+Z9e5qjhpEqEwhOoDE6ueMHdd4jO/R/LzSc/L/aZQyCT51jt+dVd8Xi+MG6NVOLXs/9EIfLgqVYx/3hiNQawm/v+qsc+sZHHqWrxPGn+phUyb61KQGIf/DYmljqzLrocQSFYcDWjiubrbWOD8hAxKPlYSRU909lzkGKv3Pt+V3QHnoxw4ga0X4MVk9kTs/0pO/ltwv59qq2VrwIDAQAB";//教程查看获取方式（必须配置）
 
-    public  String notify_url = "http://localhost:8080/*";
+    public  String notify_url = "http://localhost:8080/payError";
 
-    public  String return_url = "http://localhost:8080/parkingLog";
+    public  String return_url = "http://localhost:8080/paySuccess";
 
     public  String sign_type = "RSA2";
 

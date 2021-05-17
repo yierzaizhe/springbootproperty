@@ -1,10 +1,16 @@
 package com.ylz.login.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ylz.login.entity.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ylz.login.entity.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -17,7 +23,6 @@ import java.util.List;
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
     SysUser selectByName(String userName);
-
     /**
      * 查询指定行数据
      *
@@ -26,4 +31,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return 对象列表
      */
     List<SysUser> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+
+    IPage<UserInfo> searchUserInfo(Page<Map<String, Object>> page, @Param(Constants.WRAPPER) QueryWrapper<Map<String, Object>> wrapper);
+
 }

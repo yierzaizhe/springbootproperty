@@ -2,30 +2,23 @@ package com.ylz.login.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * <p>
- * 用户表
- * </p>
- *
  * @author ylz
- * @since 2021-03-03
+ * @Description
+ * @date 2021-05-17-12:45
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SysUser implements Serializable {
+public class UserInfo {
 
-    private static final long serialVersionUID = 1L;
-
-    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -36,7 +29,7 @@ public class SysUser implements Serializable {
     /**
      * 用户名
      */
-    private String userName;
+    private String user_name;
 
     /**
      * 用户密码
@@ -47,7 +40,7 @@ public class SysUser implements Serializable {
      * 上一次登录时间
      */
     @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private LocalDateTime lastLoginTime;
+    private LocalDateTime last_login_time;
 
     /**
      * 账号是否可用。默认为1（可用）
@@ -57,38 +50,52 @@ public class SysUser implements Serializable {
     /**
      * 是否过期。默认为1（没有过期）
      */
-    private Boolean accountNotExpired;
+    private Boolean account_not_expired;
 
     /**
      * 账号是否锁定。默认为1（没有锁定）
      */
-    private Boolean accountNotLocked;
+    private Boolean account_not_locked;
 
     /**
      * 证书（密码）是否过期。默认为1（没有过期）
      */
-    private Boolean credentialsNotExpired;
+    private Boolean credentials_not_expired;
 
     /**
      * 创建时间
      */
     @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private LocalDateTime createTime;
+    private LocalDateTime creat_time;
 
     /**
      * 修改时间
      */
     @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private LocalDateTime updateTime;
+    private LocalDateTime update_time;
 
     /**
      * 创建人
      */
-    private Integer createUser;
+    private Integer create_user;
 
     /**
      * 修改人
      */
-    private Integer updateUser;
+    private Integer update_user;
+
+    private Integer role_id;
+
+    private String role_code;
+
+    /**
+     * 角色名
+     */
+    private String role_name;
+
+    /**
+     * 角色说明
+     */
+    private String role_description;
 
 }

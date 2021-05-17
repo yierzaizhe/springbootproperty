@@ -58,7 +58,7 @@ public class SysHouseLiveController {
     }
 
     @RequestMapping("/add")
-    public JsonResult addOwner(@RequestBody SysHouseLive sysHouseLive){
+    public JsonResult addOwner(@RequestBody SysHouseLive sysHouseLive) throws Exception{
         if (sysHouseLive == null){
             return ResultTool.fail(ResultCode.LIVE_ADD_FAILED);
         }

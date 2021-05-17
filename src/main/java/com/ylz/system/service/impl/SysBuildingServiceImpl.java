@@ -5,13 +5,18 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ylz.common.utils.StringUtil;
 import com.ylz.system.entity.SysBuilding;
+import com.ylz.system.entity.SysHouse;
 import com.ylz.system.mapper.SysBuildingMapper;
 import com.ylz.system.service.ISysBuildingService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ylz.system.service.ISysHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +38,8 @@ public class SysBuildingServiceImpl extends ServiceImpl<SysBuildingMapper, SysBu
     @Autowired
     private SysBuildingMapper buildingMapper;
 
+    @Autowired
+    private ISysHouseService houseService;
     /**
      * 查询所有
      * @return
@@ -78,9 +85,28 @@ public class SysBuildingServiceImpl extends ServiceImpl<SysBuildingMapper, SysBu
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Integer delete(Map<String,Object> param) {
         int id = (int) param.get("id");
-        return buildingMapper.deleteById(id);
+        int resulut = 0;
+        try{
+            Map<String,Object> deleted = new HashMap<>();
+            String houseCode = "";
+            if (id > 10) {
+                houseCode = String.valueOf(id);
+
+            } else {
+                houseCode = "0" +  String.valueOf(id);
+            }
+            deleted.put("houseCode",houseCode);
+            houseService.deleteByHouseCode(deleted);
+            resulut=buildingMapper.deleteById(id);
+        }catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+        }
+
+        return resulut;
     }
 
     @Override
@@ -100,7 +126,50 @@ public class SysBuildingServiceImpl extends ServiceImpl<SysBuildingMapper, SysBu
     }
 
     @Override
-    public Integer add(SysBuilding SysBuilding) {
-        return buildingMapper.insert(SysBuilding);
+    @Transactional(rollbackFor = Exception.class)
+    public Integer add(SysBuilding sysBuilding) {
+        int floor = sysBuilding.getTotalLevel();
+        int unit = sysBuilding.getTotalUnit();
+        int id = sysBuilding.getId();
+        int resulut = 0;
+        try{
+            String buildingName = sysBuilding.getName();
+            for (int i=1 ;i<=floor ;i++){
+                for (int j=1 ;j<=unit ;j++){
+                    for (int k =1 ;k<=2;k++) {
+                        SysHouse sysHouse = new SysHouse();
+                        sysHouse.setBuildingId(id);
+                        sysHouse.setBuildingName(buildingName);
+                        sysHouse.setUnit(j);
+                        sysHouse.setFloor(i);
+                        String x = "";
+                        if (id > 10) {
+                            x = String.valueOf(id);
+                        } else {
+                            x = "0" +  String.valueOf(id);
+                        }
+                        String y = "0" +  String.valueOf(j);
+
+                        String z ="00";
+                        if (i > 10) {
+                            z = String.valueOf(i);
+                        } else {
+                            z = "0" + String.valueOf(i);
+                        }
+                        String m = "0"+String.valueOf(k);
+                        sysHouse.setHouseCode(x+y+z+m);
+                        sysHouse.setArea("120㎡");
+                        sysHouse.setDescription("请修改信息");
+                        houseService.add(sysHouse);
+                    }
+                }
+            }
+            resulut = buildingMapper.insert(sysBuilding);
+
+        }catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+        }
+        return resulut;
     }
 }

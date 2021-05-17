@@ -3,6 +3,7 @@ package com.ylz.alipay.controller;
 import com.alipay.api.AlipayApiException;
 import com.ylz.alipay.entity.Order;
 import com.ylz.alipay.service.AliPayService;
+import com.ylz.common.utils.IdGenerator;
 import com.ylz.common.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,7 @@ public class PayController {
     public String alipay(String outTradeNo, String subject,
                          String totalAmount, String description) throws AlipayApiException {
         Order order = new Order();
-        order.setOut_trade_no(StringUtil.getUUID());
+        order.setOut_trade_no(IdGenerator.getId());
         //order.setOut_trade_no(outTradeNo);
         order.setSubject(subject);
         order.setTotal_amount(totalAmount);

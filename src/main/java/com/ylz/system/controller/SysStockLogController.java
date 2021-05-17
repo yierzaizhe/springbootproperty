@@ -85,7 +85,7 @@ public class SysStockLogController {
     }
 
     @RequestMapping("/add")
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public JsonResult addStockLog(@RequestBody Map<String, Object> param){
         if (param == null){
             return ResultTool.fail(ResultCode.PARK_UP_FAILED);
@@ -126,8 +126,7 @@ public class SysStockLogController {
             result = stockLogService.add(stockLog);
         }catch (Exception e){
             e.printStackTrace();
-            e.printStackTrace();
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
 
         if (result <= 0){

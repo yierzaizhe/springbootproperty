@@ -66,6 +66,7 @@ public class SysParkingLogServiceImpl extends ServiceImpl<SysParkingLogMapper, S
             if (!StringUtil.isEmpty((String) param.get("pageSize"))){
                 pageSize =  Integer.parseInt((String) param.get("pageSize"));
             }
+            wrapper.orderByDesc("start_time");
         }
         page.setCurrent(currentPage);
         page.setSize(pageSize);

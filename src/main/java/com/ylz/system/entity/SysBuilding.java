@@ -27,7 +27,7 @@ public class SysBuilding implements Serializable {
      * 楼栋ID
 
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.INPUT)
     private Integer id;
 
     /**

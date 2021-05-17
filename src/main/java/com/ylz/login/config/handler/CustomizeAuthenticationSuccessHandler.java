@@ -20,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,8 +48,9 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
         //更新用户表登陆时间等信息
         User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         SysUser sysUser=userService.selectByName(userDetails.getUsername());
-        sysUser.setLastLoginTime(new Date());
-        sysUser.setUpdateTime(new Date());
+        LocalDateTime now = LocalDateTime.now();
+        sysUser.setLastLoginTime(now);
+        sysUser.setUpdateTime(now);
         sysUser.setUpdateUser(sysUser.getId());
         userService.update(sysUser);
 
@@ -60,7 +62,7 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
         String ip = AccessAddressUtil.getIpAddress(httpServletRequest);
         Map<String,Object> map = new HashMap<>();
         map.put("ip",ip);
-
+        map.put("Authorities",userDetails.getAuthorities());
         String jwtToken = JwtTokenUtil.generateToken(userDetails.getUsername(),expirationSeconds, map);
         //刷新时间
         Integer expire = validTime*24*60*60*1000;

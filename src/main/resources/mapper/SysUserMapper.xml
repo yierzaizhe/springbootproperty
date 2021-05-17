@@ -17,7 +17,6 @@
         <result property="createUser" column="create_user" jdbcType="INTEGER"/>
         <result property="updateUser" column="update_user" jdbcType="INTEGER"/>
     </resultMap>
-
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="SysUserMap">
         select
@@ -26,7 +25,19 @@
         limit #{offset}, #{limit}
     </select>
 
+
     <select id="selectByName" resultMap="SysUserMap">
         select * from sys_user where account = #{userName};
     </select>
+
+
+    <select id="searchUserInfo" resultType="java.util.Map">
+	SELECT
+    us.*,sr.id role_id,sr.role_code,sr.role_name,sr.role_description
+	from sys_user us
+    left join sys_user_role_relation surr on us.id = surr.user_id
+    left join sys_role sr on surr.role_id = sr.id
+	${ew.customSqlSegment}
+</select>
+
 </mapper>

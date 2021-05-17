@@ -22,6 +22,8 @@ public interface ISysHouseService extends IService<SysHouse> {
     public int count(Map<String,Object> param);
     //删除
     public Integer delete(Map<String,Object> param);
+    //删除
+    public Integer deleteByHouseCode(Map<String,Object> param);
     //按id查信息
     public SysHouse findById(Integer id);
     //更新信息

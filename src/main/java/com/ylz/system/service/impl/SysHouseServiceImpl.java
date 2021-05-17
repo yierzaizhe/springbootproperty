@@ -77,6 +77,15 @@ public class SysHouseServiceImpl extends ServiceImpl<SysHouseMapper, SysHouse> i
     }
 
     @Override
+    public Integer deleteByHouseCode(Map<String, Object> param) {
+        String code= String.valueOf(param.get("houseCode"));
+        QueryWrapper wrapper = new QueryWrapper<>();
+        wrapper.likeRight("house_code",code);
+        houseMapper.delete(wrapper);
+        return null;
+    }
+
+    @Override
     public SysHouse findById(Integer id) {
         return houseMapper.selectById(id);
     }

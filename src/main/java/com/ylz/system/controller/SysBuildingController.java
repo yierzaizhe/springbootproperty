@@ -7,8 +7,10 @@ import com.ylz.common.entity.JsonResult;
 import com.ylz.common.enums.ResultCode;
 import com.ylz.common.utils.ResultTool;
 import com.ylz.system.entity.SysBuilding;
+import com.ylz.system.entity.SysHouse;
 import com.ylz.system.service.ISysBuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -74,16 +76,22 @@ public class SysBuildingController {
         if (building == null){
             return ResultTool.fail(ResultCode.BUILD_UP_FAILED);
         }
-        if (building.getId() == null ){
-            int result = buildingService.add(building);
-            if (result <= 0){
-                return ResultTool.fail(ResultCode.BUILD_ADD_FAILED);
-            }
-            return ResultTool.success();
-        }
+
         int result = buildingService.update(building);
         if (result <= 0){
             return ResultTool.fail(ResultCode.BUILD_UP_FAILED);
+        }
+        return ResultTool.success();
+    }
+
+    @RequestMapping("/add")
+    public JsonResult add(@RequestBody SysBuilding sysBuilding){
+        if (sysBuilding == null){
+            return ResultTool.fail(ResultCode.BUILD_UP_FAILED);
+        }
+        int result = buildingService.add(sysBuilding);
+        if (result <= 0){
+            return ResultTool.fail(ResultCode.BUILD_ADD_FAILED);
         }
         return ResultTool.success();
     }

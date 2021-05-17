@@ -7,11 +7,13 @@ import com.ylz.common.utils.StringUtil;
 import com.ylz.system.entity.SysHouse;
 import com.ylz.system.entity.SysHouseLive;
 import com.ylz.system.mapper.SysHouseLiveMapper;
+import com.ylz.system.mapper.SysHouseMapper;
 import com.ylz.system.service.ISysHouseLiveService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -33,6 +35,8 @@ public class SysHouseLiveServiceImpl extends ServiceImpl<SysHouseLiveMapper, Sys
     @Autowired
     private SysHouseLiveMapper houseLiveMapper;
 
+    @Autowired
+    private SysHouseMapper houseMapper;
     @Override
     public IPage<SysHouseLive> searchBy(Map<String, Object> param) {
         //分页信息
@@ -93,7 +97,10 @@ public class SysHouseLiveServiceImpl extends ServiceImpl<SysHouseLiveMapper, Sys
     }
 
     @Override
-    public Integer add(SysHouseLive sysHouseLive) {
+    @Transactional(rollbackFor = Exception.class)
+    public Integer add(SysHouseLive sysHouseLive) throws Exception {
+        String houseCode = sysHouseLive.getHouseCode();
+
         return houseLiveMapper.insert(sysHouseLive);
     }
 
