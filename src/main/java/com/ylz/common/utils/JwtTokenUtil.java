@@ -36,6 +36,7 @@ public class JwtTokenUtil {
             publicKey = keyStore.getCertificate("jwt").getPublicKey();
         }catch (Exception e){
             e.printStackTrace();
+
         }
     }
 
