@@ -1,10 +1,10 @@
 package com.ylz.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.ylz.system.entity.SysHouse;
 import com.ylz.system.entity.SysHouseLive;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,11 +20,13 @@ public interface ISysHouseLiveService extends IService<SysHouseLive> {
     public IPage<SysHouseLive> searchBy(Map<String,Object> param);
     public int count(Map<String,Object> param);
     //删除
-    public Integer delete(Map<String,Object> param);
+    public Integer delete(Map<String,Object> param) throws Exception;
     //按id查信息
     public SysHouseLive findById(Integer id);
     //更新信息
     public Integer update(SysHouseLive sysHouseLive);
 
     public Integer add(SysHouseLive sysHouseLive) throws Exception;
+
+    public List<Map<String, Object>> countLiveType();
 }

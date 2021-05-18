@@ -83,7 +83,7 @@ public class SysHouseLiveController {
      * @return
      */
     @RequestMapping("/delete")
-    public JsonResult delete(@RequestBody Map<String, Object> param){
+    public JsonResult delete(@RequestBody Map<String, Object> param) throws Exception {
         if (param.size()<=0 || param == null || param.get("id") == null){
             return ResultTool.fail(ResultCode.LIVE_DEL_FAILED);
         }

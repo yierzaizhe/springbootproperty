@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -104,5 +105,14 @@ public class SysHouseServiceImpl extends ServiceImpl<SysHouseMapper, SysHouse> i
     @Override
     public Integer add(SysHouse sysHouse) {
         return houseMapper.insert(sysHouse);
+    }
+
+    @Override
+    public List<Map<String, Object>> countBuildPeople() {
+        QueryWrapper<SysHouse> wrapper = new QueryWrapper<>();
+        wrapper.select("building_name","COUNT(building_name) AS count")
+                .eq("is_live",1)
+                .groupBy("building_id");
+        return houseMapper.selectMaps(wrapper);
     }
 }

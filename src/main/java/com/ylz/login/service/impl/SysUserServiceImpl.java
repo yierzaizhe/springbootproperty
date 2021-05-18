@@ -195,4 +195,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public List<SysUser> queryAllByLimit(int offset, int limit) {
         return this.sysUserMapper.queryAllByLimit(offset, limit);
     }
+
+    @Override
+    public int updatePassword(SysUser sysUser) {
+        QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
+        wrapper.eq("account",sysUser.getAccount());
+        return sysUserMapper.update(sysUser,wrapper);
+    }
 }

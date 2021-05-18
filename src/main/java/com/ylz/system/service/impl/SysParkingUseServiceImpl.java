@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ylz.common.utils.StringUtil;
+import com.ylz.system.entity.SysHouseLive;
 import com.ylz.system.entity.SysParking;
 import com.ylz.system.entity.SysParkingUse;
 import com.ylz.system.mapper.SysParkingMapper;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -105,5 +107,13 @@ public class SysParkingUseServiceImpl extends ServiceImpl<SysParkingUseMapper, S
     @Override
     public Integer add(SysParkingUse sysParkingUse) {
         return parkingUseMapper.insert(sysParkingUse);
+    }
+
+    @Override
+    public List<Map<String, Object>> countParkType() {
+        QueryWrapper<SysParkingUse> wrapper = new QueryWrapper<>();
+        wrapper.select("use_type as name","COUNT(use_type) AS value")
+                .groupBy("use_type");
+        return parkingUseMapper.selectMaps(wrapper);
     }
 }

@@ -16,7 +16,6 @@ import com.ylz.login.service.ISysUserRoleRelationService;
 import com.ylz.login.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -121,7 +120,34 @@ public class SysUserController {
         }
         return ResultTool.success();
     }
-
+    @RequestMapping("/updatePass")
+    public JsonResult updatePass(@RequestBody Map<String, Object> param) throws Exception {
+        if (param == null){
+            return ResultTool.fail(ResultCode.PARAM_IS_BLANK);
+        }
+        String account = (String) param.get("account");
+        String oldPassword = (String) param.get("oldPassword");
+        String newPassword = (String) param.get("newPassword");
+        IPage<SysUser> oldUser = userService.searchBy(param);
+        if (oldUser.getTotal() >1 || oldUser.getTotal() <=0){
+            return ResultTool.fail();
+        }
+        String password = oldUser.getRecords().get(0).getPassword();
+        boolean passResult=passwordEncoder.matches(oldPassword,password);
+        if (passResult==false){
+            return ResultTool.fail(ResultCode.USER_CREDENTIALS_ERROR);
+        }
+        SysUser sysUser = new SysUser();
+        sysUser.setAccount(account);
+        sysUser.setPassword(passwordEncoder.encode(newPassword));
+        LocalDateTime now = LocalDateTime.now();
+        sysUser.setUpdateTime(now);
+        int result = userService.updatePassword(sysUser);
+        if (result <= 0){
+            return ResultTool.fail(ResultCode.COMMON_FAIL);
+        }
+        return ResultTool.success();
+    }
     @RequestMapping("/add")
     public JsonResult add(@RequestBody Map<String, Object> param) throws Exception {
         if (param == null){

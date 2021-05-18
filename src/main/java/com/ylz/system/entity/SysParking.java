@@ -35,6 +35,7 @@ public class SysParking implements Serializable {
      * 车位名称
      */
     private String name;
+    private Boolean isUse;
 
     /**
      * 创建时间

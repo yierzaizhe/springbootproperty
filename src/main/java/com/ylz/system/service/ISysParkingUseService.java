@@ -5,6 +5,7 @@ import com.ylz.system.entity.SysParking;
 import com.ylz.system.entity.SysParkingUse;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,4 +29,7 @@ public interface ISysParkingUseService extends IService<SysParkingUse> {
     public Integer update(SysParkingUse sysParkingUse);
 
     public Integer add(SysParkingUse sysParkingUse);
+
+    //COUNT
+    public List<Map<String, Object>> countParkType();
 }

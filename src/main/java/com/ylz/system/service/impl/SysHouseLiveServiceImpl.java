@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,8 +36,8 @@ public class SysHouseLiveServiceImpl extends ServiceImpl<SysHouseLiveMapper, Sys
     @Autowired
     private SysHouseLiveMapper houseLiveMapper;
 
-    @Autowired
-    private SysHouseMapper houseMapper;
+    @Autowired SysHouseMapper houseMapper;
+
     @Override
     public IPage<SysHouseLive> searchBy(Map<String, Object> param) {
         //分页信息
@@ -74,9 +75,15 @@ public class SysHouseLiveServiceImpl extends ServiceImpl<SysHouseLiveMapper, Sys
     }
 
     @Override
-    public Integer delete(Map<String, Object> param) {
-
+    @Transactional(rollbackFor = Exception.class)
+    public Integer delete(Map<String, Object> param) throws Exception {
+        String houseCode = String.valueOf(param.get("houseCode"));
         int id = (int) param.get("id");
+        SysHouse sysHouse = new SysHouse();
+        QueryWrapper<SysHouse> wrapper = new QueryWrapper<>();
+        wrapper.eq("house_code",houseCode);
+        sysHouse.setIsLive(false);
+        int result = houseMapper.update(sysHouse,wrapper);
         return houseLiveMapper.deleteById(id);
     }
 
@@ -100,9 +107,15 @@ public class SysHouseLiveServiceImpl extends ServiceImpl<SysHouseLiveMapper, Sys
     @Transactional(rollbackFor = Exception.class)
     public Integer add(SysHouseLive sysHouseLive) throws Exception {
         String houseCode = sysHouseLive.getHouseCode();
-
+        QueryWrapper<SysHouse> wrapper = new QueryWrapper<>();
+        wrapper.eq("house_code",houseCode);
+        SysHouse sysHouse = new SysHouse();
+        sysHouse.setIsLive(true);
+        houseMapper.update(sysHouse,wrapper);
         return houseLiveMapper.insert(sysHouseLive);
     }
+
+
 
     @Override
     public int count(Map<String, Object> param) {
@@ -111,6 +124,14 @@ public class SysHouseLiveServiceImpl extends ServiceImpl<SysHouseLiveMapper, Sys
             return 0;
         }
         wrapper.eq("house_code",param.get("houseCode"));
-        return houseLiveMapper.selectCount(wrapper);
+        List list =houseLiveMapper.selectList(wrapper);
+        return list.size();
+    }
+    @Override
+    public List<Map<String, Object>> countLiveType() {
+        QueryWrapper<SysHouseLive> wrapper = new QueryWrapper<>();
+        wrapper.select("kind_param as name","COUNT(kind_param) AS value")
+                .groupBy("kind_param");
+        return houseLiveMapper.selectMaps(wrapper);
     }
 }

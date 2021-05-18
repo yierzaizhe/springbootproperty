@@ -5,6 +5,7 @@ import com.ylz.system.entity.SysBuilding;
 import com.ylz.system.entity.SysHouse;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,4 +31,7 @@ public interface ISysHouseService extends IService<SysHouse> {
     public Integer update(SysHouse sysHouse);
 
     public Integer add(SysHouse sysHouse);
+
+    //COUNT
+    public List<Map<String, Object>> countBuildPeople();
 }

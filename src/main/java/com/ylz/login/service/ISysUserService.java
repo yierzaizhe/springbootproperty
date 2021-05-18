@@ -49,7 +49,9 @@ public interface ISysUserService extends IService<SysUser> {
      * @return 实例对象
      */
     SysUser update(SysUser sysUser);
+
     int restPassword(SysUser sysUser);
+
     /**
      * 根据用户名查询用户
      *
@@ -66,4 +68,5 @@ public interface ISysUserService extends IService<SysUser> {
      */
     List<SysUser> queryAllByLimit(int offset, int limit);
 
+    int updatePassword(SysUser sysUser);
 }
