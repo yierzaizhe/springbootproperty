@@ -22,6 +22,7 @@ public class CustomizeAbstractSecurityInterceptor extends AbstractSecurityInterc
     @Autowired
     private FilterInvocationSecurityMetadataSource securityMetadataSource;
 
+
     @Autowired
     public void setMyAccessDecisionManager(CustomizeAccessDecisionManager accessDecisionManager) {
         super.setAccessDecisionManager(accessDecisionManager);
