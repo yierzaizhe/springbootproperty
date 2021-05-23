@@ -62,7 +62,7 @@ jwt:
     authentication:
       path: /auth
   header: Authorization
-  expiration: 604800
+  expiration: 86400
   secret: ylz
 #Minio配置
 # 图片服务器 minio配置

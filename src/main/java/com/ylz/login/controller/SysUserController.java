@@ -184,12 +184,13 @@ public class SysUserController {
         return ResultTool.success();
     }
 
-    @RequestMapping("/update-role")
-    public JsonResult updateRole(@RequestBody SysUserRoleRelation roleRelation){
-        if (roleRelation == null){
+    @RequestMapping("/updateState")
+    public JsonResult updateState(@RequestBody Map<String, Object> param){
+        if (param == null){
             return ResultTool.fail(ResultCode.COMMON_FAIL);
         }
-        int result = relationService.update(roleRelation);
+
+        int result = userService.updateState(param);
         if (result <= 0){
             return ResultTool.fail(ResultCode.COMMON_FAIL);
         }

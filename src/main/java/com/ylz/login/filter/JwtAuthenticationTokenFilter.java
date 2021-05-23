@@ -1,8 +1,12 @@
 package com.ylz.login.filter;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ylz.common.enums.ResultCode;
 import com.ylz.common.utils.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,6 +50,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserDetailsService detailsService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
@@ -53,11 +58,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         //获取请求的ip地址
         String currentIp = AccessAddressUtil.getIpAddress(request);
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String authToken = authHeader.substring("Bearer ".length());
+        if (authHeader != null && authHeader.startsWith("Bearer")) {
+            String authToken = authHeader.substring("Bearer".length());
 
-            String username = JwtTokenUtil.parseToken(authToken, "_secret");
-            String ip = CollectionUtil.getMapValue(JwtTokenUtil.getClaims(authToken), "ip");
+            Claims claims=JWTUtils.parseJWT(authToken);
+            String  claimsSubject= claims.getSubject();
+            Map claimsMap = (Map) JSON.parse(claimsSubject);
+            String username = String.valueOf(claimsMap.get("userName"));
+            String ip = String.valueOf(claimsMap.get("ip"));
 
             //进入黑名单验证
             if (redisUtil.isBlackList(authToken)) {

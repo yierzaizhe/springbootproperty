@@ -1,11 +1,9 @@
 package com.ylz.login.config.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.ylz.common.entity.JsonResult;
-import com.ylz.common.utils.AccessAddressUtil;
-import com.ylz.common.utils.JwtTokenUtil;
-import com.ylz.common.utils.RedisUtil;
-import com.ylz.common.utils.ResultTool;
+import com.ylz.common.utils.*;
 import com.ylz.login.entity.SysUser;
 import com.ylz.login.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +41,7 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
 
     @Autowired
     private ISysUserService userService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         //更新用户表登陆时间等信息
@@ -60,10 +59,18 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
         //生成token
         //获取请求的ip地址
         String ip = AccessAddressUtil.getIpAddress(httpServletRequest);
-        Map<String,Object> map = new HashMap<>();
-        map.put("ip",ip);
-        map.put("Authorities",userDetails.getAuthorities());
-        String jwtToken = JwtTokenUtil.generateToken(userDetails.getUsername(),expirationSeconds, map);
+        JSONObject subject = new JSONObject(true);
+        subject.put("ip", ip);
+        subject.put("userName", userDetails.getUsername());
+        /*map.put("Authorities",userDetails.getAuthorities());*/
+        //String jwtToken = JwtTokenUtil.generateToken(userDetails.getUsername(),expirationSeconds, map);
+        String jwtToken = null;
+        try {
+            //jwtToken = JjwtUtil.createJWT(userDetails.getUsername(),userDetails.getUsername(),userDetails.getUsername());
+            jwtToken = JWTUtils.createJWT(StringUtil.getUUID(),subject.toJSONString(),expirationSeconds);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //刷新时间
         Integer expire = validTime*24*60*60*1000;
         //获取请求的ip地址

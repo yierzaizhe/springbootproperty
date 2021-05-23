@@ -45,56 +45,57 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private ISysUserRoleRelationService relationService;
+
     @Override
     public IPage<SysUser> searchBy(Map<String, Object> param) {
         //分页信息
         IPage page = new Page();
         QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
         //判断查询条件
-        if(param != null){
-            if (!StringUtil.isEmpty((String) param.get("startTime"))){
-                wrapper.ge("create_time",param.get("startTime"));
+        if (param != null) {
+            if (!StringUtil.isEmpty((String) param.get("startTime"))) {
+                wrapper.ge("create_time", param.get("startTime"));
             }
-            if (!StringUtil.isEmpty((String) param.get("endTime"))){
-                wrapper.le("create_time",param.get("endTime"));
+            if (!StringUtil.isEmpty((String) param.get("endTime"))) {
+                wrapper.le("create_time", param.get("endTime"));
             }
-            if (!StringUtil.isEmpty((String) param.get("account"))){
-                wrapper.like("account",param.get("account"));
+            if (!StringUtil.isEmpty((String) param.get("account"))) {
+                wrapper.like("account", param.get("account"));
             }
-            if (!StringUtil.isEmpty((String) param.get("userName"))){
-                wrapper.like("user_name",param.get("userName"));
+            if (!StringUtil.isEmpty((String) param.get("userName"))) {
+                wrapper.like("user_name", param.get("userName"));
             }
-            if (!StringUtil.isEmpty((String) param.get("currentPage"))){
-                currentPage =  Integer.parseInt((String) param.get("currentPage"));
+            if (!StringUtil.isEmpty((String) param.get("currentPage"))) {
+                currentPage = Integer.parseInt((String) param.get("currentPage"));
             }
-            if (!StringUtil.isEmpty((String) param.get("pageSize"))){
-                pageSize =  Integer.parseInt((String) param.get("pageSize"));
+            if (!StringUtil.isEmpty((String) param.get("pageSize"))) {
+                pageSize = Integer.parseInt((String) param.get("pageSize"));
             }
         }
         page.setCurrent(currentPage);
         page.setSize(pageSize);
-        IPage<SysUser> userIPage = sysUserMapper.selectPage(page,wrapper);
+        IPage<SysUser> userIPage = sysUserMapper.selectPage(page, wrapper);
         userIPage.getRecords().forEach(sysUser -> {
 
         });
-        return sysUserMapper.selectPage(page,wrapper);
+        return sysUserMapper.selectPage(page, wrapper);
     }
 
     @Override
     public IPage<UserInfo> searchAll(Map<String, Object> param) {
         //创建QueryWrapper搜索对象，判断参数不为空则传入参数
         QueryWrapper<Map<String, Object>> wrapper = new QueryWrapper<>();
-        if (!StringUtil.isEmpty((String) param.get("account"))){
-            wrapper.like("account",param.get("account"));
+        if (!StringUtil.isEmpty((String) param.get("account"))) {
+            wrapper.like("account", param.get("account"));
         }
-        if (!StringUtil.isEmpty((String) param.get("userName"))){
-            wrapper.like("user_name",param.get("userName"));
+        if (!StringUtil.isEmpty((String) param.get("userName"))) {
+            wrapper.like("user_name", param.get("userName"));
         }
-        if (!StringUtil.isEmpty((String) param.get("currentPage"))){
-            currentPage =  Integer.parseInt((String) param.get("currentPage"));
+        if (!StringUtil.isEmpty((String) param.get("currentPage"))) {
+            currentPage = Integer.parseInt((String) param.get("currentPage"));
         }
-        if (!StringUtil.isEmpty((String) param.get("pageSize"))){
-            pageSize =  Integer.parseInt((String) param.get("pageSize"));
+        if (!StringUtil.isEmpty((String) param.get("pageSize"))) {
+            pageSize = Integer.parseInt((String) param.get("pageSize"));
         }
         //创建分页对象
         Page<Map<String, Object>> page = new Page<>(currentPage, pageSize);
@@ -117,8 +118,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Integer update_two(Map<String, Object> param)  throws Exception {
-        Integer result=0;
+    public Integer update_two(Map<String, Object> param) throws Exception {
+        Integer result = 0;
 
         String username = (String) param.get("user_name");
         String account = (String) param.get("account");
@@ -131,26 +132,26 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         roleRelation.setUserId(userId);
         relationService.update(roleRelation);
 
-        SysUser sysUser =new SysUser();
+        SysUser sysUser = new SysUser();
         sysUser.setId(userId);
         sysUser.setAccount(account);
         sysUser.setUserName(username);
         LocalDateTime now = LocalDateTime.now();
         sysUser.setUpdateTime(now);
         QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
-        wrapper.eq("id",sysUser.getId());
-        result = sysUserMapper.update(sysUser,wrapper);
+        wrapper.eq("id", sysUser.getId());
+        result = sysUserMapper.update(sysUser, wrapper);
 
         return result;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Integer add(@RequestBody Map<String, Object> param) throws Exception{
+    public Integer add(@RequestBody Map<String, Object> param) throws Exception {
         String username = (String) param.get("userName");
         String account = (String) param.get("account");
         String password = (String) param.get("password");
-        Integer role =  Integer.parseInt(String.valueOf(param.get("role")));
+        Integer role = Integer.parseInt(String.valueOf(param.get("role")));
         SysUser sysUser = new SysUser();
         sysUser.setAccount(account);
         sysUser.setUserName(username);
@@ -159,11 +160,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setCreateTime(now);
         sysUserMapper.insert(sysUser);
 
-        SysUser result=this.queryById(sysUser.getId());
+        SysUser result = this.queryById(sysUser.getId());
         SysUserRoleRelation roleRelation = new SysUserRoleRelation();
         roleRelation.setRoleId(role);
         roleRelation.setUserId(result.getId());
-        int result2= relationService.add(roleRelation);
+        int result2 = relationService.add(roleRelation);
 
         return result2;
     }
@@ -199,7 +200,35 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public int updatePassword(SysUser sysUser) {
         QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
-        wrapper.eq("account",sysUser.getAccount());
-        return sysUserMapper.update(sysUser,wrapper);
+        wrapper.eq("account", sysUser.getAccount());
+        return sysUserMapper.update(sysUser, wrapper);
     }
+
+    @Override
+    public int updateState(Map<String, Object> param) {
+        Integer result = 0;
+
+        Integer id = Integer.parseInt((String) param.get("id"));
+        Boolean enabled = true;
+        Boolean accountNotExpired = true;
+        Boolean accountNotLocked = true;
+        enabled = (Boolean) param.get("enabled");
+        accountNotExpired = (Boolean) param.get("accountNotExpired");
+        accountNotLocked = (Boolean) param.get("accountNotLocked");
+
+
+
+        SysUser sysUser = new SysUser();
+        sysUser.setId(id);
+        sysUser.setEnabled(enabled);
+        sysUser.setAccountNotExpired(accountNotExpired);
+        sysUser.setAccountNotLocked(accountNotLocked);
+        LocalDateTime now = LocalDateTime.now();
+        sysUser.setUpdateTime(now);
+        QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
+        wrapper.eq("id", sysUser.getId());
+        result = sysUserMapper.update(sysUser, wrapper);
+        return result;
+    }
+
 }

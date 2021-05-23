@@ -69,4 +69,5 @@ public interface ISysUserService extends IService<SysUser> {
     List<SysUser> queryAllByLimit(int offset, int limit);
 
     int updatePassword(SysUser sysUser);
+    int updateState(@RequestBody Map<String, Object> param);
 }
