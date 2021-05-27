@@ -52,25 +52,36 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
         sysUser.setUpdateTime(now);
         sysUser.setUpdateUser(sysUser.getId());
         userService.update(sysUser);
+        String jwtToken = null;
+        String ip = AccessAddressUtil.getIpAddress(httpServletRequest);
+        JSONObject subject = new JSONObject(true);
+        subject.put("ip", ip);
+        subject.put("userName", userDetails.getUsername());
+        String authHeader = httpServletRequest.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer")) {
+            String authToken = authHeader.substring("Bearer".length());
+            authToken =authToken.replace("\"", "");
+            jwtToken = authToken;
+        }else {
+            jwtToken=JwtTokenUtil.generateToken(userDetails.getUsername(),expirationSeconds, subject);
+        }
 
         //如登录成功之后返回给前台当前用户菜单权限，
         //进而前台动态的控制菜单的显示
         //返回json数据
         //生成token
         //获取请求的ip地址
-        String ip = AccessAddressUtil.getIpAddress(httpServletRequest);
-        JSONObject subject = new JSONObject(true);
-        subject.put("ip", ip);
-        subject.put("userName", userDetails.getUsername());
+
         /*map.put("Authorities",userDetails.getAuthorities());*/
-        //String jwtToken = JwtTokenUtil.generateToken(userDetails.getUsername(),expirationSeconds, map);
-        String jwtToken = null;
+
+        //String jwtToken = JwtTokenUtil.generateToken(userDetails.getUsername(),expirationSeconds, subject);
+        /*String jwtToken = null;
         try {
             //jwtToken = JjwtUtil.createJWT(userDetails.getUsername(),userDetails.getUsername(),userDetails.getUsername());
             jwtToken = JWTUtils.createJWT(StringUtil.getUUID(),subject.toJSONString(),expirationSeconds);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         //刷新时间
         Integer expire = validTime*24*60*60*1000;
         //获取请求的ip地址
@@ -80,8 +91,6 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
         //处理编码方式，防止中文乱码的情况
         httpServletResponse.setContentType("text/json;charset=utf-8");
         httpServletResponse.getWriter().write(JSON.toJSONString(result));
-
-
 
     }
 }

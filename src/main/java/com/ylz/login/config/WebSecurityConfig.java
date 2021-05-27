@@ -65,7 +65,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // JWT 拦截器
     @Autowired
     JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
-
+    /**
+     * 自定义访问无权限接口时403响应内容
+     */
+    @Autowired
+    UrlAccessDeniedHandler urlAccessDeniedHandler;
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //配置认证方式等
@@ -80,7 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+        http.exceptionHandling().accessDeniedHandler(urlAccessDeniedHandler);
         http.authorizeRequests().
                 /*antMatchers("/getUser").hasAnyAuthority("query_user").*/
                 withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {

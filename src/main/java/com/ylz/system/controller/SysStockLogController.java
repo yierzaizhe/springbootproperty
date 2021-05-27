@@ -149,5 +149,23 @@ public class SysStockLogController {
             return ResultTool.fail(ResultCode.COMMUNITY_UPSTA_FAILED);
         }
     }
-
+    @RequestMapping("/updateStatus")
+    public JsonResult updateStatus(@RequestBody Map<String, Object> param){
+        if (param == null){
+            return ResultTool.fail();
+        }
+        Integer id = Integer.parseInt(String.valueOf(param.get("id")));
+        String status = String.valueOf(param.get("status"));
+        Boolean flag = stockLogService.updateStatus(status,id);
+        SysStockLog stockLog = new SysStockLog();
+        LocalDateTime now = LocalDateTime.now();
+        stockLog.setUpdateTime(now);
+        stockLog.setId(id);
+        stockLogService.update(stockLog);
+        if (flag){
+            return ResultTool.success();
+        }else {
+            return ResultTool.fail(ResultCode.COMMUNITY_UPSTA_FAILED);
+        }
+    }
 }

@@ -60,12 +60,15 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer")) {
             String authToken = authHeader.substring("Bearer".length());
-
-            Claims claims=JWTUtils.parseJWT(authToken);
+            authToken =authToken.replace("\"", "");
+            /*Claims claims=JWTUtils.parseJWT(authToken);
             String  claimsSubject= claims.getSubject();
             Map claimsMap = (Map) JSON.parse(claimsSubject);
             String username = String.valueOf(claimsMap.get("userName"));
-            String ip = String.valueOf(claimsMap.get("ip"));
+            String ip = String.valueOf(claimsMap.get("ip"));*/
+            String username = JwtTokenUtil.parseToken(authToken, "_secret");
+            String ip = CollectionUtil.getMapValue(JwtTokenUtil.getClaims(authToken), "ip");
+
 
             //进入黑名单验证
             if (redisUtil.isBlackList(authToken)) {
@@ -80,6 +83,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
              * 同时，已过期的token加入黑名单
              */
             if (redisUtil.hasKey(authToken)) {//判断redis是否有保存
+            //if (redisUtil.hasKey(username)) {//判断redis是否有保存
                 String expirationTime = redisUtil.hget(authToken,"expirationTime").toString();
                 if (JwtTokenUtil.isExpiration(expirationTime)) {
                     //获得redis中用户的token刷新时效

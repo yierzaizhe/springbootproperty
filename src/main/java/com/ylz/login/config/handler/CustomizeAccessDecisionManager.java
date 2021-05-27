@@ -1,5 +1,7 @@
 package com.ylz.login.config.handler;
 
+import com.ylz.system.service.NoSecurity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -18,6 +20,8 @@ import java.util.Iterator;
  */
 @Component
 public class CustomizeAccessDecisionManager implements AccessDecisionManager {
+    @Autowired
+    private NoSecurity noSecurity;
     @Override
     public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> collection) throws AccessDeniedException, InsufficientAuthenticationException {
         Iterator<ConfigAttribute> iterator = collection.iterator();
@@ -34,7 +38,6 @@ public class CustomizeAccessDecisionManager implements AccessDecisionManager {
             }
         }
         throw new AccessDeniedException("权限不足!");
-
     }
 
     @Override
