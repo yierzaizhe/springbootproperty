@@ -13,6 +13,7 @@ import com.ylz.system.service.ISysParkingService;
 import com.ylz.system.service.ISysParkingUseService;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -85,7 +86,8 @@ public class SysParkingUseController {
         return ResultTool.success();
     }
     @RequestMapping("/add")
-    public JsonResult addHouse(@RequestBody SysParkingUse sysParkingUse){
+    @Transactional(rollbackFor = Exception.class)
+    public JsonResult addParkUse(@RequestBody SysParkingUse sysParkingUse) throws Exception{
         if (sysParkingUse == null){
             return ResultTool.fail(ResultCode.PARK_UP_FAILED);
         }
@@ -94,7 +96,20 @@ public class SysParkingUseController {
         if (parkingService.count(map)<=0){
             return ResultTool.fail(ResultCode.PARK_NOT_FAILED);
         }
+        Map<String, Object> map2 = new HashMap<>();
+        map2.put("parkingCode",sysParkingUse.getParkingCode());
+        if (parkingUseService.searchBy(map2).getTotal()>0){
+            return ResultTool.fail(ResultCode.PARK_EXIST_FAILED);
+        }
+        SysParking sysParking =new SysParking();
+        sysParking.setCode(sysParkingUse.getParkingCode());
+        sysParking.setIsUse(true);
+        LocalDateTime now = LocalDateTime.now();
+        sysParking.setUpdateTime(now);
+        parkingService.updateStatus(sysParking);
+        /*parkingService.update() */
         int result = parkingUseService.add(sysParkingUse);
+
         if (result <= 0){
             return ResultTool.fail(ResultCode.PARK_ADD_FAILED);
         }

@@ -68,6 +68,7 @@ public enum   ResultCode {
     PARK_UPSTA_FAILED(5005,"更新车位信息状态失败，请检查参数！"),
     PARK_NOT_FAILED(5005,"该车位不存在，请检查参数！"),
     PAY_ADD_FAILED(5001,"该车辆未完成上次出场！");
+
     private Integer code;
     private String message;
 

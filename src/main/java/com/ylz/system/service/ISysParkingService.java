@@ -28,5 +28,7 @@ public interface ISysParkingService extends IService<SysParking> {
     //更新信息
     public Integer update(SysParking sysParking);
 
+    public Integer updateStatus(SysParking sysParking);
+
     public Integer add(SysParking sysParking);
 }

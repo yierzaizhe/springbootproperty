@@ -96,6 +96,16 @@ public class SysParkingServiceImpl extends ServiceImpl<SysParkingMapper, SysPark
         }
         return result;
     }
+    @Override
+    public Integer updateStatus(SysParking sysParking) {
+        Integer result=0;
+        if (sysParking != null){
+            QueryWrapper<SysParking> wrapper = new QueryWrapper<>();
+            wrapper.eq("code",sysParking.getCode());
+            result = parkingMapper.update(sysParking,wrapper);
+        }
+        return result;
+    }
 
     @Override
     public Integer add(SysParking sysParking) {
